@@ -5,7 +5,7 @@
 #
 Name     : qt6webengine
 Version  : 6.5.3
-Release  : 2
+Release  : 3
 URL      : https://download.qt.io/official_releases/qt/6.5/6.5.3/submodules/qtwebengine-everywhere-src-6.5.3.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.5/6.5.3/submodules/qtwebengine-everywhere-src-6.5.3.tar.xz
 Summary  : Ninja is a small build system with a focus on speed.
@@ -40,6 +40,7 @@ BuildRequires : libpng-dev
 BuildRequires : libxml2-dev
 BuildRequires : llvm-dev
 BuildRequires : mesa-dev
+BuildRequires : nodejs-dev
 BuildRequires : openjdk
 BuildRequires : openjdk-dev
 BuildRequires : openssl-dev
@@ -168,7 +169,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1696374428
+export SOURCE_DATE_EPOCH=1696375927
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -204,7 +205,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1696374428
+export SOURCE_DATE_EPOCH=1696375927
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
