@@ -1,0 +1,12 @@
+# This file contains pkgconfig build requirements that get picked up
+# but are undesirable. One entry per line, no whitespace.
+directfb
+libLCMS2
+libgav1
+libhwy
+libjxl
+libjxl_threads
+libvmaf
+libyuv
+rav1e
+snappy
