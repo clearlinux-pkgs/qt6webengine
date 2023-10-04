@@ -1,5 +1,13 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
+gcc-staticdev
+gperf
 icu4c-dev
+ninja
 nodejs-dev
+not-ffmpeg
+not-ffmpeg-dev
+pipewire-dev
 qt6declarative-dev
+qt6tools-dev
+qt6websockets-dev

@@ -5,12 +5,14 @@
 #
 Name     : qt6webengine
 Version  : 6.5.3
-Release  : 3
+Release  : 4
 URL      : https://download.qt.io/official_releases/qt/6.5/6.5.3/submodules/qtwebengine-everywhere-src-6.5.3.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.5/6.5.3/submodules/qtwebengine-everywhere-src-6.5.3.tar.xz
 Summary  : Ninja is a small build system with a focus on speed.
 Group    : Development/Tools
 License  : 0BSD APSL-2.0 Apache-2.0 Artistic-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause BSD-3-Clause-Clear BSL-1.0 CC-BY-4.0 CC-BY-SA-3.0 CC0-1.0 ClArtistic EPL-1.0 FTL GFDL-1.2 GFDL-1.3 GPL-2.0 GPL-3.0 HPND ICU IJG ISC LGPL-2.0 LGPL-2.1 LGPL-3.0 Libpng MIT MIT-Opengroup MPL-1.1 MPL-2.0 MPL-2.0-no-copyleft-exception NCSA OFL-1.1 OpenSSL Public-Domain Python-2.0 SGI-B-2.0 Unicode-DFS-2016 Unlicense Zlib bzip2-1.0.6 xpp
+Requires: qt6webengine-lib = %{version}-%{release}
+Requires: qt6webengine-libexec = %{version}-%{release}
 Requires: qt6webengine-license = %{version}-%{release}
 BuildRequires : SDL-dev
 BuildRequires : Vulkan-Headers-dev Vulkan-Loader-dev Vulkan-Tools
@@ -28,10 +30,12 @@ BuildRequires : extra-cmake-modules wayland
 BuildRequires : extra-cmake-modules-data
 BuildRequires : flex
 BuildRequires : freeglut-dev
+BuildRequires : gcc-staticdev
 BuildRequires : git
 BuildRequires : glibc-dev
 BuildRequires : gnutls-dev
 BuildRequires : googletest-dev
+BuildRequires : gperf
 BuildRequires : icu4c-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86vm-dev
 BuildRequires : libgcrypt-dev
@@ -40,11 +44,15 @@ BuildRequires : libpng-dev
 BuildRequires : libxml2-dev
 BuildRequires : llvm-dev
 BuildRequires : mesa-dev
+BuildRequires : ninja
 BuildRequires : nodejs-dev
+BuildRequires : not-ffmpeg
+BuildRequires : not-ffmpeg-dev
 BuildRequires : openjdk
 BuildRequires : openjdk-dev
 BuildRequires : openssl-dev
 BuildRequires : perl
+BuildRequires : pipewire-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(OpenEXR)
 BuildRequires : pkgconfig(SvtAv1Enc)
@@ -125,6 +133,8 @@ BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : qt6base-dev
 BuildRequires : qt6declarative-dev
+BuildRequires : qt6tools-dev
+BuildRequires : qt6websockets-dev
 BuildRequires : qtbase-dev
 BuildRequires : qtbase-dev mesa-dev
 BuildRequires : snappy-dev
@@ -145,11 +155,31 @@ seconds to start building after changing one file. Ninja is under a second.
 %package dev
 Summary: dev components for the qt6webengine package.
 Group: Development
+Requires: qt6webengine-lib = %{version}-%{release}
 Provides: qt6webengine-devel = %{version}-%{release}
 Requires: qt6webengine = %{version}-%{release}
 
 %description dev
 dev components for the qt6webengine package.
+
+
+%package lib
+Summary: lib components for the qt6webengine package.
+Group: Libraries
+Requires: qt6webengine-libexec = %{version}-%{release}
+Requires: qt6webengine-license = %{version}-%{release}
+
+%description lib
+lib components for the qt6webengine package.
+
+
+%package libexec
+Summary: libexec components for the qt6webengine package.
+Group: Default
+Requires: qt6webengine-license = %{version}-%{release}
+
+%description libexec
+libexec components for the qt6webengine package.
 
 
 %package license
@@ -169,7 +199,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1696375927
+export SOURCE_DATE_EPOCH=1696453595
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -186,7 +216,10 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-%cmake ..
+%cmake .. -DCMAKE_MESSAGE_LOG_LEVEL=STATUS \
+-DCMAKE_TOOLCHAIN_FILE=/usr/lib64/cmake/Qt6/qt.toolchain.cmake \
+-DQT_FEATURE_webengine_system_ffmpeg=ON \
+-DQT_FEATURE_webengine_system_icu=ON
 make  %{?_smp_mflags}
 popd
 
@@ -205,7 +238,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1696375927
+export SOURCE_DATE_EPOCH=1696453595
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
@@ -1686,15 +1719,147 @@ popd
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/qt6/metatypes/qt6pdf_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/metatypes/qt6pdfquick_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/metatypes/qt6pdfwidgets_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdf.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdf_private.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfquick.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfquick_private.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfwidgets.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfwidgets_private.pri
+/usr/lib64/qt6/modules/Pdf.json
+/usr/lib64/qt6/modules/PdfQuick.json
+/usr/lib64/qt6/modules/PdfWidgets.json
+/usr/lib64/qt6/qml/QtQuick/Pdf/+Material/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/+Universal/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfLinkDelegate.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfMultiPageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfPageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfScrollablePageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/plugins.qmltypes
+/usr/lib64/qt6/qml/QtQuick/Pdf/qmldir
 
 %files dev
 %defattr(-,root,root,-)
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdfdocument_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdffile_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdflink_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdflinkmodel_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdflinkmodel_p_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdfsearchmodel_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qpdfselection_p.h
+/usr/include/QtPdf/6.5.3/QtPdf/private/qtpdf-config_p.h
+/usr/include/QtPdf/QPdfBookmarkModel
+/usr/include/QtPdf/QPdfDocument
+/usr/include/QtPdf/QPdfDocumentRenderOptions
+/usr/include/QtPdf/QPdfLink
+/usr/include/QtPdf/QPdfPageNavigator
+/usr/include/QtPdf/QPdfPageRenderer
+/usr/include/QtPdf/QPdfSearchModel
+/usr/include/QtPdf/QPdfSelection
+/usr/include/QtPdf/QtPdf
+/usr/include/QtPdf/QtPdfDepends
+/usr/include/QtPdf/QtPdfVersion
+/usr/include/QtPdf/qpdfbookmarkmodel.h
+/usr/include/QtPdf/qpdfdocument.h
+/usr/include/QtPdf/qpdfdocumentrenderoptions.h
+/usr/include/QtPdf/qpdflink.h
+/usr/include/QtPdf/qpdfpagenavigator.h
+/usr/include/QtPdf/qpdfpagerenderer.h
+/usr/include/QtPdf/qpdfsearchmodel.h
+/usr/include/QtPdf/qpdfselection.h
+/usr/include/QtPdf/qtpdf-config.h
+/usr/include/QtPdf/qtpdfglobal.h
+/usr/include/QtPdf/qtpdfversion.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfdocument_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdflinkmodel_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfpageimage_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfpagenavigator_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfsearchmodel_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qquickpdfselection_p.h
+/usr/include/QtPdfQuick/6.5.3/QtPdfQuick/private/qtpdfquickglobal_p.h
+/usr/include/QtPdfQuick/QtPdfQuick
+/usr/include/QtPdfQuick/QtPdfQuickDepends
+/usr/include/QtPdfQuick/QtPdfQuickVersion
+/usr/include/QtPdfQuick/qtpdfquickversion.h
+/usr/include/QtPdfWidgets/6.5.3/QtPdfWidgets/private/qpdfview_p.h
+/usr/include/QtPdfWidgets/QPdfView
+/usr/include/QtPdfWidgets/QtPdfWidgets
+/usr/include/QtPdfWidgets/QtPdfWidgetsDepends
+/usr/include/QtPdfWidgets/QtPdfWidgetsVersion
+/usr/include/QtPdfWidgets/qpdfview.h
+/usr/include/QtPdfWidgets/qtpdfwidgetsglobal.h
+/usr/include/QtPdfWidgets/qtpdfwidgetsversion.h
 /usr/lib64/cmake/Qt6/FindGPerf.cmake
 /usr/lib64/cmake/Qt6/FindGn.cmake
 /usr/lib64/cmake/Qt6/FindNinja.cmake
 /usr/lib64/cmake/Qt6/FindNodejs.cmake
 /usr/lib64/cmake/Qt6/FindPkgConfigHost.cmake
 /usr/lib64/cmake/Qt6/FindSnappy.cmake
+/usr/lib64/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfig.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfigVersion.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginTargets.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfig.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfigVersion.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfDependencies.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfTargets.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfig.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfigVersion.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickDependencies.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickTargets.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfig.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfigVersion.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsDependencies.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsTargets.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfig.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfigVersion.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginTargets.cmake
+/usr/lib64/libQt6Pdf.prl
+/usr/lib64/libQt6Pdf.so
+/usr/lib64/libQt6PdfQuick.prl
+/usr/lib64/libQt6PdfQuick.so
+/usr/lib64/libQt6PdfWidgets.prl
+/usr/lib64/libQt6PdfWidgets.so
+/usr/lib64/pkgconfig/Qt6Pdf.pc
+/usr/lib64/pkgconfig/Qt6PdfQuick.pc
+/usr/lib64/pkgconfig/Qt6PdfWidgets.pc
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libQt6Pdf.so.6
+/usr/lib64/libQt6Pdf.so.6.5.3
+/usr/lib64/libQt6PdfQuick.so.6
+/usr/lib64/libQt6PdfQuick.so.6.5.3
+/usr/lib64/libQt6PdfWidgets.so.6
+/usr/lib64/libQt6PdfWidgets.so.6.5.3
+/usr/lib64/qt6/plugins/imageformats/libqpdf.so
+/usr/lib64/qt6/qml/QtQuick/Pdf/libpdfquickplugin.so
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/gn
 
 %files license
 %defattr(0644,root,root,0755)
