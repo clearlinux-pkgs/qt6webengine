@@ -5,12 +5,14 @@
 #
 Name     : qt6webengine
 Version  : 6.6.0
-Release  : 5
+Release  : 6
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.0/submodules/qtwebengine-everywhere-src-6.6.0.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.0/submodules/qtwebengine-everywhere-src-6.6.0.tar.xz
 Summary  : Ninja is a small build system with a focus on speed.
 Group    : Development/Tools
 License  : APSL-2.0 Apache-2.0 Artistic-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause BSD-3-Clause-Clear BSL-1.0 CC-BY-4.0 CC-BY-SA-3.0 CC0-1.0 ClArtistic EPL-1.0 GFDL-1.2 GFDL-1.3 GPL-2.0 GPL-3.0 HPND ICU IJG ISC LGPL-2.0 LGPL-2.1 LGPL-3.0 Libpng MIT MIT-Opengroup MPL-1.1 MPL-2.0 MPL-2.0-no-copyleft-exception NCSA OFL-1.1 Public-Domain Python-2.0 SGI-B-2.0 Unicode-DFS-2016 Unlicense Zlib bzip2-1.0.6 xpp
+Requires: qt6webengine-lib = %{version}-%{release}
+Requires: qt6webengine-libexec = %{version}-%{release}
 Requires: qt6webengine-license = %{version}-%{release}
 BuildRequires : SDL-dev
 BuildRequires : Vulkan-Headers-dev Vulkan-Loader-dev Vulkan-Tools
@@ -142,11 +144,31 @@ seconds to start building after changing one file. Ninja is under a second.
 %package dev
 Summary: dev components for the qt6webengine package.
 Group: Development
+Requires: qt6webengine-lib = %{version}-%{release}
 Provides: qt6webengine-devel = %{version}-%{release}
 Requires: qt6webengine = %{version}-%{release}
 
 %description dev
 dev components for the qt6webengine package.
+
+
+%package lib
+Summary: lib components for the qt6webengine package.
+Group: Libraries
+Requires: qt6webengine-libexec = %{version}-%{release}
+Requires: qt6webengine-license = %{version}-%{release}
+
+%description lib
+lib components for the qt6webengine package.
+
+
+%package libexec
+Summary: libexec components for the qt6webengine package.
+Group: Default
+Requires: qt6webengine-license = %{version}-%{release}
+
+%description libexec
+libexec components for the qt6webengine package.
 
 
 %package license
@@ -166,7 +188,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1697150048
+export SOURCE_DATE_EPOCH=1697486707
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -205,7 +227,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1697150048
+export SOURCE_DATE_EPOCH=1697486707
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
@@ -262,6 +284,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/angle/tools/flex-bison/third_party/m4sugar/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/06877624ea5c77efe3b7e39b0f909eda6e25a4ec || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/angle/tools/flex-bison/third_party/skeletons/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/angle/util/windows/third_party/StackWalker/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/33fe6f9feb6fc711ff8b5dc59283453f84fcbfe3 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/aosp_dalvik/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e2388f8b69fdb09561366720791e34840477b195 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/apple_apsl/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/37d1a9613b980a2d0611b23628dedd1ac2c36a9c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/arcore-android-sdk-client/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/arcore-android-sdk/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/9e0d9f9cb7fa0c3fb4e15afd9692948d857209bb || :
@@ -275,16 +298,19 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/blink/renderer/core/LICENSE-LGPL-2.1 %{buildroot}/usr/share/package-licenses/qt6webengine/1a180647a31404e0cf993fa333cdb7f7e75eaba5 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/blink/renderer/platform/testing/data/third_party/Noto/LICENSE_OFL.txt %{buildroot}/usr/share/package-licenses/qt6webengine/ec660b17dff69058c2bbf122ca85ab83b920fce7 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/blink/renderer/platform/testing/data/third_party/Roboto/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/boringssl/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/8b20fa2bd2612e033e3f9096d31b906c23d336c0 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/boringssl/src/third_party/fiat/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/8b3da8b7b055147f8fd69781a7fd1ead8de1fc66 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/boringssl/src/third_party/googletest/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/5a2314153eadadc69258a9429104cd11804ea304 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/boringssl/src/third_party/wycheproof_testvectors/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/1128f8f91104ba9ef98d37eea6523a888dcfa5de || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/breakpad/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/dc6c0b56441ee66fc3fc9edfe782ac8ac146768a || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/breakpad/breakpad/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/743549aad1b10d93e1ed9c0048f06ddf1e21fd85 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/breakpad/breakpad/src/third_party/curl/COPYING %{buildroot}/usr/share/package-licenses/qt6webengine/d9249ffcf036ea6b7707403ae7ba967d5150fe30 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/breakpad/breakpad/src/third_party/libdisasm/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/176f0f384fc922e443fdf1ced15f04d40566fb4f || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/breakpad/breakpad/src/third_party/musl/COPYRIGHT %{buildroot}/usr/share/package-licenses/qt6webengine/5c2f226413ffba59c4d89c54af4983ac763d2aa9 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/brotli/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/c045813a6c514f2d30d60a07c6aaf3603850e608 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/bspatch/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b19fcecb9aa6cdc211c72d84924a14609fa6abb || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/byte_buddy/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/20c072e62cc60ba39d1e33012c923d81cebc74d4 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/cardboard/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/407379b11f0594a36fdb9282813b627371dae5b7 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/cast_core/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/1128f8f91104ba9ef98d37eea6523a888dcfa5de || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/cast_core/public/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/1128f8f91104ba9ef98d37eea6523a888dcfa5de || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/catapult/common/py_vulcanize/third_party/rcssmin/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/7df059597099bb7dcf25d2a9aedfaf4465f72d8d || :
@@ -411,6 +437,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@babel/traverse/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/578785efdec6fa01dae357fb1e7675ccac00861e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@babel/types/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/578785efdec6fa01dae357fb1e7675ccac00861e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@colors/colors/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/0c75bf219569bcb432376a47aa7ca56e59708fb9 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@es-joy/jsdoccomment/LICENSE-MIT.txt %{buildroot}/usr/share/package-licenses/qt6webengine/a676b3a7889ceb3118e504ed0de4d4306c84b911 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@eslint/eslintrc/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e9cc6f57245f90867a48da3b38244d973fef5d20 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@eslint/eslintrc/node_modules/globals/license %{buildroot}/usr/share/package-licenses/qt6webengine/80674912e3033be358331910ba27d5812369c2fc || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/@eslint/eslintrc/node_modules/minimatch/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/bb408e929caeb1731945b2ba54bc337edb87cc66 || :
@@ -538,6 +565,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/colorette/LICENSE.md %{buildroot}/usr/share/package-licenses/qt6webengine/dd5bd0f399563301ff166fbbd11d23f446711c83 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/colors/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/0a6406086278439661ad4132fd4bf709d99be00e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/commander/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/63513188251d15fcdc716703fbee89be4a3a20e6 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/comment-parser/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/ccbda8cac1b76f38821a2a0330e46bff78798f0a || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/concat-map/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/b2e68ce937c1f851926f7e10280cc93221d4f53c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/connect/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/386f3ad5aadf7dd974260c9bd4d1133d3576f2d3 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/connect/node_modules/debug/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/d16a2786962571280a11cae01d5e59aeb1351c9a || :
@@ -764,6 +792,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/jest-worker/node_modules/supports-color/license %{buildroot}/usr/share/package-licenses/qt6webengine/5aaf48196ddd4d007a3067aa7f30303ca8e4b29c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/js-tokens/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/f1c13e8c00a23a075cb581b6d6262fd755b08eed || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/js-yaml/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/cf1619aed46c3c608c54e1e4bdec5e7e38e436a7 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/jsdoc-type-pratt-parser/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/00df9bf02458ce2502f72d079020cc92cc300099 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/jsesc/LICENSE-MIT.txt %{buildroot}/usr/share/package-licenses/qt6webengine/d7384cd3ed0c9614f87dde0f86568017f369814c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/json-parse-better-errors/LICENSE.md %{buildroot}/usr/share/package-licenses/qt6webengine/50bc601c8f5f03c17bb7d09e259737b684f600ff || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/json-parse-even-better-errors/LICENSE.md %{buildroot}/usr/share/package-licenses/qt6webengine/391a564224b9e883e82e481e622017b8744194f3 || :
@@ -790,6 +819,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/levn/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/7bc795bf398cfa51e99e85dc51931c3b0d1b5a79 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/license-checker/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/19835a5772938d3f2064485bca7a147017ddc8c0 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/license-checker/node_modules/debug/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/d16a2786962571280a11cae01d5e59aeb1351c9a || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/lilconfig/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/4bb4fe6f3d32249012ee9648c8706b8260c5b624 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/lines-and-columns/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/32516b94a3f339e3800a0265c045604164815196 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/locate-path/license %{buildroot}/usr/share/package-licenses/qt6webengine/5aaf48196ddd4d007a3067aa7f30303ca8e4b29c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/lodash.get/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/fc4de79d3e95696f11dbec64b0f99d421deadd30 || :
@@ -824,6 +854,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/merge-stream/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/a782249fbecf3c0ef9d0a6f43e618ce8f6f58302 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/merge2/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/958ef6c346d97a22fb1294eb672e00f8de017619 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/micromatch/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/6210a5e4e9224b4fc8ef250fe227311daa2bc5ac || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/mime-db/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/dae0f982ffe71762045fc77c015c83bda38c1c9e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/mime-types/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/f027af3e61af3880fd7f7b8ba9452a85dd215738 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/mime/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2e84853fb5f2711901b6ecb4a0b8fe4d419348fd || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/min-indent/license %{buildroot}/usr/share/package-licenses/qt6webengine/a4724f7a67b1a592a64f32cc7433938ddb122ae0 || :
@@ -1055,6 +1086,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/unbzip2-stream/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/5b563f5234fa02f1b3ce3da4658af0666eba6f80 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/universalify/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/286f0ec32934adf077d1b587c77b7ed02d7ba8f9 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/unpipe/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/140c0ed7f877e74246d459750884aadd7f3466a0 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/update-browserslist-db/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e15c625abbd5bd8836f1ac689cf13c8731b9d9f0 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/upper-case/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/3a7f886b632d2197676a40020d354e84b7860604 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/uri-js/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/dc45ad0fa775735dfad6f590f126dee709763efc || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/node_modules/util-deprecate/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/cbde92577cb69b3b45dd33f8dc600732cf9e14cb || :
@@ -1091,6 +1123,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/devtools-frontend/src/third_party/pyjson5/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/92a74693f02c8e78dd90b2014c52bc35a95bab86 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/distributed_point_functions/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/distributed_point_functions/code/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/dom_distiller_js/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/b2caf7739cffe36848e24eb2f86ba8cd8a270e04 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/dpkg-shlibdeps/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/06877624ea5c77efe3b7e39b0f909eda6e25a4ec || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/eigen3/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/eigen3/src/COPYING.APACHE %{buildroot}/usr/share/package-licenses/qt6webengine/96156402e790d03d8915c83282bb3bd777d78800 || :
@@ -1150,14 +1183,19 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hunspell/COPYING %{buildroot}/usr/share/package-licenses/qt6webengine/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hunspell/COPYING.LESSER %{buildroot}/usr/share/package-licenses/qt6webengine/f45ee1c765646813b442ca58de72e20a64a7ddba || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hunspell/COPYING.MPL %{buildroot}/usr/share/package-licenses/qt6webengine/aba8d76d0af67d57da3c3c321caa59f3d242386b || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/c9f7518aa965555d8d63b27d2e05a4a8d03b7f5b || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/af/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/532f0d4728a92fa8d468b4672d845a221b65c68a || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/am/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/64961fb2cbce17d5fe8c1697e2b29c195156de24 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/as/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/be/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/2d5ef3471c6490ba2a852820d1cc983584236667 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/bg/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/1e8aa4afcf395504865314e24c1f2ff54b0f775f || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/bn/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/cs/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/557e96f55c5ae75e5e87dd814d7ffc1aaaf1c5b1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/cu/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/d88cd68ed06cc237fd6eac591f436f7adabfd375 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/cy/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/ec9fbff12e795af512cac142040522a5b2912845 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/da/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/dd85e1c0740be2a7e48c074c274f12fe7b9edd49 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/de/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/9e9fe15b8f47cad50a004bda3008cf8e8715bf79 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/el/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/a93d47f6c51f4784c04ebd71a9ea7e477599b406 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/en-GB/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/1e93fad059b49b87cc047c14b586c72803ac200c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/es/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/b56473e6f79a3460ca3b2e387cbd36148add6679 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/et/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/5135356f84160feb5cf44aace4316c8e684ffca8 || :
@@ -1168,18 +1206,25 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/hr/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/d9585ca2481d1cd0e26567168e620bfc9fcca05e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/hu/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/5ff7f5f12e909978750f9ee0c7fb967f4e9652e6 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/hy/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/01a6b4bf79aca9b556822601186afab86e8c4fbf || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/it/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/c4039d07eb4515f21fd3ec34bded82f5d78d6eb6 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/ka/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/67ea7ea54ae12702f441df8651fceb0989a13f93 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/kn/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/la/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/c02733fb67ff1f87ce898647576a2014b49865d3 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/lt/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/3a68c343b338f3684d60b92d58ef404e6a84e6e6 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/ml/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/mn/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/acbc5bc75172928ae64865e49a1ca029f3948270 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/mr/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/nl/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/a6cf167d379837e88c6824c4e318be9b083f6934 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/or/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/pa/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/bf90a19b5b1a60261935d246c062e2b5b0f3a645 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/pt/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/0422696119facf6ee30e8e5ca92feeeb43b535fe || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/sk/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/557e96f55c5ae75e5e87dd814d7ffc1aaaf1c5b1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/sl/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/9911284351e5823e12453e1f49f7ca8ff20233fd || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/sq/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/40d9a6034c57d2f5739564921fa45a78952d67e9 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/ta/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/te/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/tk/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/17e9086faeb87dca157ee75f7530f3c5df7fbfa1 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/hyphenation-patterns/src/uk/NOTICE %{buildroot}/usr/share/package-licenses/qt6webengine/202ca25f0db1c63d4ec4484cea459c7d870a2347 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/iaccessible2/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/6d0bca59bdd3deb86b78bf03482934d7f1cfd69d || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/iccjpeg/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/d2a3c681e7a47eb666ca6fa17365f0b7145bf129 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/icu/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/255667e4213ddb7198295c9775079c093a046f42 || :
@@ -1299,7 +1344,12 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@babel/template/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/578785efdec6fa01dae357fb1e7675ccac00861e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@babel/traverse/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/578785efdec6fa01dae357fb1e7675ccac00861e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@babel/types/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/578785efdec6fa01dae357fb1e7675ccac00861e || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/gen-mapping/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e091d6ff39a03ffe3217b8839a3e0011dfa379ff || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/resolve-uri/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/737372d0ce81cdc670ebd131771ff8089e86dd99 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/set-array/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e091d6ff39a03ffe3217b8839a3e0011dfa379ff || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/source-map/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/737372d0ce81cdc670ebd131771ff8089e86dd99 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/sourcemap-codec/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/735079ef2f70022be5abf63a65288c2f87dcd34a || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/@jridgewell/trace-mapping/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e5556d805ed6e5a9445e590af4ef9f0c64c09195 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/ansi-styles/license %{buildroot}/usr/share/package-licenses/qt6webengine/5aaf48196ddd4d007a3067aa7f30303ca8e4b29c || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/brace-expansion/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/433c2b9c71bad0957f4831068c2f5d973cef98a9 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/node/node_modules/chalk/license %{buildroot}/usr/share/package-licenses/qt6webengine/5aaf48196ddd4d007a3067aa7f30303ca8e4b29c || :
@@ -1329,6 +1379,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/5c96ec15105dcc4c076c941930462a327e404caf || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/third_party/libfuzzer/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/eaf1885eabc5eb24bb51fcb140c69dbca7e95b0e || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/third_party/mozilla/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/a8856071d07c0a4905d16d9667676efd198bdba2 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/third_party/ninja/COPYING %{buildroot}/usr/share/package-licenses/qt6webengine/b60a29b41c8364d3fae9328d45f88df1e18db1ce || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/third_party/tinycbor/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/744aeb214e5bd02d894c0390cb505be56847b6be || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/openscreen/src/third_party/zlib/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/500ebc5f533530a42f995dc261a43cc15ca4cfa8 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/opus/src/COPYING %{buildroot}/usr/share/package-licenses/qt6webengine/dfada97ba32cb44804736a7768104a06be91a4f7 || :
@@ -1337,6 +1388,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/ots/src/subprojects/packagefiles/brotli/LICENSE.build %{buildroot}/usr/share/package-licenses/qt6webengine/776236d49af728f3113a1b75a3454cfbd6681d37 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/ots/src/subprojects/packagefiles/woff2/LICENSE.build %{buildroot}/usr/share/package-licenses/qt6webengine/408509d2bf90145694a899b154d927007f6b940a || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/ow2_asm/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/0b435116f793ce9f8465992d45c883a46664c9b9 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/pdfium/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/8c1882fce75ba75dc642fc25e288a7241a00e2ef || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/pdfium/third_party/NotoSansCJK/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/8c86021c176aef0e7a24f0bab628775df031f238 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/pdfium/third_party/pymock/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/794a893e510ca5c15c9c97a609ce47b0df74fc1a || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/pefile_py3/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/37b93c4d2ba81267c2687454e17bbf9908f40f4e || :
@@ -1528,8 +1580,10 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/s2cellid/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/securemessage/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/securemessage/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/selenium-atoms/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/605635c657f092f8c8f970792ccf4d8f70359c1b || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/selenium-atoms/LICENSE.closure %{buildroot}/usr/share/package-licenses/qt6webengine/a6a5418b4d67d9f3a33cbf184b25ac7f9fa87d33 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/selenium-atoms/LICENSE.sizzle %{buildroot}/usr/share/package-licenses/qt6webengine/f88a01daef8766bb6f5ec3415384cb375f38d515 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/selenium-atoms/LICENSE.wgxpath %{buildroot}/usr/share/package-licenses/qt6webengine/23932dedfd8f8b7c256d786505f955036dc3e532 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/setupdesign/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/befd452ca38c55a83e97a4aa941fcdad33590cfd || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/shell-encryption/src/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/e2b6fcdde503187a13ad4e0d6d3eb141deb31bd4 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/shell-encryption/src/glog/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/1128f8f91104ba9ef98d37eea6523a888dcfa5de || :
@@ -1597,6 +1651,7 @@ cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/thir
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/vulkan_memory_allocator/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/b1e3723fe9cdb45e92ac20aaa6c733a3baaa2562 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/web-animations-js/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/web-animations-js/sources/COPYING %{buildroot}/usr/share/package-licenses/qt6webengine/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/webdriver/LICENSE %{buildroot}/usr/share/package-licenses/qt6webengine/605635c657f092f8c8f970792ccf4d8f70359c1b || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/webgpu-cts/src/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/ab42e3b6f011f572391f73b50ed49dd1a918578a || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/webgpu-cts/src/src/external/petamoriken/float16/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/391418b801229041a800558874e160f168e361be || :
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/src/3rdparty/chromium/third_party/webgpu-cts/src/standalone/third_party/jquery/LICENSE.txt %{buildroot}/usr/share/package-licenses/qt6webengine/6bb8c67f530ce4a677240cd3ca103acfab3b1f6a || :
@@ -1666,20 +1721,159 @@ popd
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/qt6/metatypes/qt6pdf_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/metatypes/qt6pdfquick_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/metatypes/qt6pdfwidgets_relwithdebinfo_metatypes.json
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdf.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdf_private.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfquick.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfquick_private.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfwidgets.pri
+/usr/lib64/qt6/mkspecs/modules/qt_lib_pdfwidgets_private.pri
+/usr/lib64/qt6/modules/Pdf.json
+/usr/lib64/qt6/modules/PdfQuick.json
+/usr/lib64/qt6/modules/PdfWidgets.json
+/usr/lib64/qt6/qml/QtQuick/Pdf/+Material/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/+Universal/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfLinkDelegate.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfMultiPageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfPageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfScrollablePageView.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/PdfStyle.qml
+/usr/lib64/qt6/qml/QtQuick/Pdf/plugins.qmltypes
+/usr/lib64/qt6/qml/QtQuick/Pdf/qmldir
 
 %files dev
 %defattr(-,root,root,-)
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfdocument_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdffile_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdflink_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdflinkmodel_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfsearchmodel_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfselection_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qtpdf-config_p.h
+/usr/include/QtPdf/6.6.0/QtPdf/private/qtpdfexports_p.h
+/usr/include/QtPdf/QPdfBookmarkModel
+/usr/include/QtPdf/QPdfDocument
+/usr/include/QtPdf/QPdfDocumentRenderOptions
+/usr/include/QtPdf/QPdfLink
+/usr/include/QtPdf/QPdfLinkModel
+/usr/include/QtPdf/QPdfPageNavigator
+/usr/include/QtPdf/QPdfPageRenderer
+/usr/include/QtPdf/QPdfSearchModel
+/usr/include/QtPdf/QPdfSelection
+/usr/include/QtPdf/QtPdf
+/usr/include/QtPdf/QtPdfDepends
+/usr/include/QtPdf/QtPdfVersion
+/usr/include/QtPdf/qpdfbookmarkmodel.h
+/usr/include/QtPdf/qpdfdocument.h
+/usr/include/QtPdf/qpdfdocumentrenderoptions.h
+/usr/include/QtPdf/qpdflink.h
+/usr/include/QtPdf/qpdflinkmodel.h
+/usr/include/QtPdf/qpdfpagenavigator.h
+/usr/include/QtPdf/qpdfpagerenderer.h
+/usr/include/QtPdf/qpdfsearchmodel.h
+/usr/include/QtPdf/qpdfselection.h
+/usr/include/QtPdf/qtpdf-config.h
+/usr/include/QtPdf/qtpdfexports.h
+/usr/include/QtPdf/qtpdfglobal.h
+/usr/include/QtPdf/qtpdfversion.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfdocument_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdflinkmodel_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfpageimage_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfpagenavigator_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfsearchmodel_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfselection_p.h
+/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qtpdfquickglobal_p.h
+/usr/include/QtPdfQuick/QtPdfQuick
+/usr/include/QtPdfQuick/QtPdfQuickDepends
+/usr/include/QtPdfQuick/QtPdfQuickVersion
+/usr/include/QtPdfQuick/qtpdfquickversion.h
+/usr/include/QtPdfWidgets/6.6.0/QtPdfWidgets/private/qpdfpageselector_p.h
+/usr/include/QtPdfWidgets/6.6.0/QtPdfWidgets/private/qpdfview_p.h
+/usr/include/QtPdfWidgets/QPdfPageSelector
+/usr/include/QtPdfWidgets/QPdfView
+/usr/include/QtPdfWidgets/QtPdfWidgets
+/usr/include/QtPdfWidgets/QtPdfWidgetsDepends
+/usr/include/QtPdfWidgets/QtPdfWidgetsVersion
+/usr/include/QtPdfWidgets/qpdfpageselector.h
+/usr/include/QtPdfWidgets/qpdfview.h
+/usr/include/QtPdfWidgets/qtpdfwidgetsglobal.h
+/usr/include/QtPdfWidgets/qtpdfwidgetsversion.h
 /usr/lib64/cmake/Qt6/FindGPerf.cmake
 /usr/lib64/cmake/Qt6/FindGn.cmake
 /usr/lib64/cmake/Qt6/FindNinja.cmake
 /usr/lib64/cmake/Qt6/FindNodejs.cmake
 /usr/lib64/cmake/Qt6/FindPkgConfigHost.cmake
 /usr/lib64/cmake/Qt6/FindSnappy.cmake
+/usr/lib64/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfig.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfigVersion.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginTargets.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfig.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfigVersion.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfDependencies.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfTargets.cmake
+/usr/lib64/cmake/Qt6Pdf/Qt6PdfVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfig.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfigVersion.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickDependencies.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickTargets.cmake
+/usr/lib64/cmake/Qt6PdfQuick/Qt6PdfQuickVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfig.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfigVersion.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsDependencies.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsTargets.cmake
+/usr/lib64/cmake/Qt6PdfWidgets/Qt6PdfWidgetsVersionlessTargets.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfig.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfigVersion.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Qml/QmlPlugins/Qt6PdfQuickpluginTargets.cmake
+/usr/lib64/libQt6Pdf.prl
+/usr/lib64/libQt6Pdf.so
+/usr/lib64/libQt6PdfQuick.prl
+/usr/lib64/libQt6PdfQuick.so
+/usr/lib64/libQt6PdfWidgets.prl
+/usr/lib64/libQt6PdfWidgets.so
+/usr/lib64/pkgconfig/Qt6Pdf.pc
+/usr/lib64/pkgconfig/Qt6PdfQuick.pc
+/usr/lib64/pkgconfig/Qt6PdfWidgets.pc
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libQt6Pdf.so.6
+/usr/lib64/libQt6Pdf.so.6.6.0
+/usr/lib64/libQt6PdfQuick.so.6
+/usr/lib64/libQt6PdfQuick.so.6.6.0
+/usr/lib64/libQt6PdfWidgets.so.6
+/usr/lib64/libQt6PdfWidgets.so.6.6.0
+/usr/lib64/qt6/plugins/imageformats/libqpdf.so
+/usr/lib64/qt6/qml/QtQuick/Pdf/libpdfquickplugin.so
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/gn
 
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/qt6webengine/0005480dce93b70f7d62fa311f49e3c6c1a6dcfa
 /usr/share/package-licenses/qt6webengine/0089492f26432aff9d6b7183875e9d8ca69dd640
+/usr/share/package-licenses/qt6webengine/00df9bf02458ce2502f72d079020cc92cc300099
 /usr/share/package-licenses/qt6webengine/00f93f4a80cf72df4e58b3f4479fd8362f3ce88e
 /usr/share/package-licenses/qt6webengine/01334b192864f2bebae9b68f38047011c6a57e10
 /usr/share/package-licenses/qt6webengine/01a6b4bf79aca9b556822601186afab86e8c4fbf
@@ -1773,6 +1967,7 @@ popd
 /usr/share/package-licenses/qt6webengine/1eea939d4fcd772241fe51a6b1583e7322a51717
 /usr/share/package-licenses/qt6webengine/1f0a15bbb0febb59ac19144ac84f6562770372ef
 /usr/share/package-licenses/qt6webengine/1f38d688772ad94c40e9aff79a1856e495d005d2
+/usr/share/package-licenses/qt6webengine/202ca25f0db1c63d4ec4484cea459c7d870a2347
 /usr/share/package-licenses/qt6webengine/20ad45bd29ecb3cc6f38a08a27eb09c7b74a1f6d
 /usr/share/package-licenses/qt6webengine/20c072e62cc60ba39d1e33012c923d81cebc74d4
 /usr/share/package-licenses/qt6webengine/2111f90a2fa5afba10ae753c5ca31a1d8080f597
@@ -1782,6 +1977,7 @@ popd
 /usr/share/package-licenses/qt6webengine/228627b469fdbcd4ad3a5839030b1ddb81c3b8aa
 /usr/share/package-licenses/qt6webengine/22c988139cff2e7daa6906f0f828fa7acbb5a0b4
 /usr/share/package-licenses/qt6webengine/2311e14c1a66abb71be0eba0e63a37573c4e5d59
+/usr/share/package-licenses/qt6webengine/23932dedfd8f8b7c256d786505f955036dc3e532
 /usr/share/package-licenses/qt6webengine/24e88659f340db6c96dded0af6d14a7c75986ec2
 /usr/share/package-licenses/qt6webengine/255667e4213ddb7198295c9775079c093a046f42
 /usr/share/package-licenses/qt6webengine/258dd0a3af581f9611d23049d9dec3609f18b6a1
@@ -1857,6 +2053,7 @@ popd
 /usr/share/package-licenses/qt6webengine/39e6f567a10e36b2e77727e98e60bbcb3eb3af0b
 /usr/share/package-licenses/qt6webengine/3a2464a2666aca84777908cbdab550dc132025ec
 /usr/share/package-licenses/qt6webengine/3a295a0618f87cd27d1a8f6901348bd06120f134
+/usr/share/package-licenses/qt6webengine/3a68c343b338f3684d60b92d58ef404e6a84e6e6
 /usr/share/package-licenses/qt6webengine/3a7f886b632d2197676a40020d354e84b7860604
 /usr/share/package-licenses/qt6webengine/3a86cfdfa553511b381388859c9e94ce9e1f916b
 /usr/share/package-licenses/qt6webengine/3acad00f27f89710cd66d3f5528aed5046ac28d9
@@ -1881,8 +2078,10 @@ popd
 /usr/share/package-licenses/qt6webengine/3f2598589aa832e54bc7def344ef79da2610891d
 /usr/share/package-licenses/qt6webengine/3f7efaad0827264c359b54fd5454b5386aa4b02f
 /usr/share/package-licenses/qt6webengine/3fdf83b77816757b2277572c894e17111886da9c
+/usr/share/package-licenses/qt6webengine/407379b11f0594a36fdb9282813b627371dae5b7
 /usr/share/package-licenses/qt6webengine/408509d2bf90145694a899b154d927007f6b940a
 /usr/share/package-licenses/qt6webengine/40a625d1f3bb1aadd7696354d10c3c88b6fc0e62
+/usr/share/package-licenses/qt6webengine/40d9a6034c57d2f5739564921fa45a78952d67e9
 /usr/share/package-licenses/qt6webengine/41377d7d72c8f05355c2e204d85d67e3850bcdae
 /usr/share/package-licenses/qt6webengine/42388860aa6d9bdaf299d53fa25a9e628101617e
 /usr/share/package-licenses/qt6webengine/425ff69136a4469ae6abc4a0674e68acec0b5255
@@ -1911,6 +2110,7 @@ popd
 /usr/share/package-licenses/qt6webengine/4aa67fb8f8b16d40701f21a8089a410a7d178ede
 /usr/share/package-licenses/qt6webengine/4ad37fc99fecc5cda018043361f5b12e350e4052
 /usr/share/package-licenses/qt6webengine/4ae7988e5af66b48b6d74a70fb30c4aedda141ee
+/usr/share/package-licenses/qt6webengine/4bb4fe6f3d32249012ee9648c8706b8260c5b624
 /usr/share/package-licenses/qt6webengine/4bbf089f0b11fa625ae4377205da5d14c82d5cd7
 /usr/share/package-licenses/qt6webengine/4bddf34fb5dbd91bb6aae59cf7bf898790a41daa
 /usr/share/package-licenses/qt6webengine/4c27231820c7478321985a0404c1e8d597e0d2c3
@@ -1934,11 +2134,13 @@ popd
 /usr/share/package-licenses/qt6webengine/521b3cb6f683a3f839e2b722d24953acfa885099
 /usr/share/package-licenses/qt6webengine/5222338131159dbdca070d6c9de90cc84c6e15af
 /usr/share/package-licenses/qt6webengine/523c95d864538249aa9029fff07c63da6802a998
+/usr/share/package-licenses/qt6webengine/532f0d4728a92fa8d468b4672d845a221b65c68a
 /usr/share/package-licenses/qt6webengine/53fa8feeb5c38478fb92bcb4709220e10624b6be
 /usr/share/package-licenses/qt6webengine/54132ee7fc85db968a3a05d92076848e439632e8
 /usr/share/package-licenses/qt6webengine/55055ad10f6fff839b980e18ca778f1f25b62a51
 /usr/share/package-licenses/qt6webengine/5548778e53b16da694f02b4716c9b3678e63305a
 /usr/share/package-licenses/qt6webengine/556147a98d3ad8ca22444c3055d0c0bee79748b9
+/usr/share/package-licenses/qt6webengine/557e96f55c5ae75e5e87dd814d7ffc1aaaf1c5b1
 /usr/share/package-licenses/qt6webengine/55822a091dca212023dfde6e6fb53df49288dbd8
 /usr/share/package-licenses/qt6webengine/5648ca4646a6d77ee875a10a0f8a576f59d8cb44
 /usr/share/package-licenses/qt6webengine/5677fc01ff907441a0b48a7640979fcc3e3e7fde
@@ -1984,12 +2186,14 @@ popd
 /usr/share/package-licenses/qt6webengine/5ff7f5f12e909978750f9ee0c7fb967f4e9652e6
 /usr/share/package-licenses/qt6webengine/60113525223c0ee650c7d07b3a4e2c240e9ff53b
 /usr/share/package-licenses/qt6webengine/60314089ff0e607f8aaf708db9791993dc91ce21
+/usr/share/package-licenses/qt6webengine/605635c657f092f8c8f970792ccf4d8f70359c1b
 /usr/share/package-licenses/qt6webengine/60c3522081bf15d7ac1d4c5a63de425ef253e87a
 /usr/share/package-licenses/qt6webengine/612ad650a328990087959416a7e2fd160b1daea9
 /usr/share/package-licenses/qt6webengine/6210a5e4e9224b4fc8ef250fe227311daa2bc5ac
 /usr/share/package-licenses/qt6webengine/6318a62fc01793796b5b977ad67c7a91816e4171
 /usr/share/package-licenses/qt6webengine/63513188251d15fcdc716703fbee89be4a3a20e6
 /usr/share/package-licenses/qt6webengine/635c546f061cb4171c7cf65409471926a89647d3
+/usr/share/package-licenses/qt6webengine/64961fb2cbce17d5fe8c1697e2b29c195156de24
 /usr/share/package-licenses/qt6webengine/64e8197cb5ae680fcf996cc0ac8760e9f1e2e3a6
 /usr/share/package-licenses/qt6webengine/64fab20ef9c097beeb8f38596e9462b2d6cff0c2
 /usr/share/package-licenses/qt6webengine/6560c016f1644ce652d83d039d8ba9e64795fd49
@@ -2001,6 +2205,7 @@ popd
 /usr/share/package-licenses/qt6webengine/66cfc7aea4d47ec6b426153339698f1d99f3cfde
 /usr/share/package-licenses/qt6webengine/66eb05fc2d0226b36339d38dd2abe45410b7665e
 /usr/share/package-licenses/qt6webengine/673b8ba529006042d31c895474d1f25724a77a85
+/usr/share/package-licenses/qt6webengine/67ea7ea54ae12702f441df8651fceb0989a13f93
 /usr/share/package-licenses/qt6webengine/6808b97edf6d2c189571af702b95916168ff7db8
 /usr/share/package-licenses/qt6webengine/686030b6b3298c011fe74266f0cde2d2c77f4a13
 /usr/share/package-licenses/qt6webengine/689ec0681815ecc32bee639c68e7740add7bd301
@@ -2036,8 +2241,10 @@ popd
 /usr/share/package-licenses/qt6webengine/735079ef2f70022be5abf63a65288c2f87dcd34a
 /usr/share/package-licenses/qt6webengine/7363889d9c7364f41a37d3efa2ec375bc836d916
 /usr/share/package-licenses/qt6webengine/736591679f2dd5abdaad180cb8e0987f7cdf7aeb
+/usr/share/package-licenses/qt6webengine/737372d0ce81cdc670ebd131771ff8089e86dd99
 /usr/share/package-licenses/qt6webengine/73efe5bda3791d234730ab0dcc48eb619a2e0ec6
 /usr/share/package-licenses/qt6webengine/73fec64fd8a5ceddbf65f705987a547c3678d981
+/usr/share/package-licenses/qt6webengine/743549aad1b10d93e1ed9c0048f06ddf1e21fd85
 /usr/share/package-licenses/qt6webengine/744aeb214e5bd02d894c0390cb505be56847b6be
 /usr/share/package-licenses/qt6webengine/747d27d982c0fa18d0d834e4381157b974e7ec11
 /usr/share/package-licenses/qt6webengine/74ded37e9d240c26a229865457a85d7ec86d86f1
@@ -2111,9 +2318,11 @@ popd
 /usr/share/package-licenses/qt6webengine/89e4939e88f1e7ff29e52604a9d65a762c062d1d
 /usr/share/package-licenses/qt6webengine/8a6d9cba3b664a8d50e5440145022eacddf8ef5e
 /usr/share/package-licenses/qt6webengine/8aa1df32065b42970c9213d18044dc8d77704408
+/usr/share/package-licenses/qt6webengine/8b20fa2bd2612e033e3f9096d31b906c23d336c0
 /usr/share/package-licenses/qt6webengine/8b30ac51919fe7a680e3ade96eddd9b5adaf0ee8
 /usr/share/package-licenses/qt6webengine/8b3da8b7b055147f8fd69781a7fd1ead8de1fc66
 /usr/share/package-licenses/qt6webengine/8bd0be2127008f228f6be64636f23909b378014d
+/usr/share/package-licenses/qt6webengine/8c1882fce75ba75dc642fc25e288a7241a00e2ef
 /usr/share/package-licenses/qt6webengine/8c20bc370f498b8aa6b4a3c3f747ed808200497e
 /usr/share/package-licenses/qt6webengine/8c86021c176aef0e7a24f0bab628775df031f238
 /usr/share/package-licenses/qt6webengine/8cc76c6a81bab77738f26fd0879b56d8cb611327
@@ -2179,13 +2388,16 @@ popd
 /usr/share/package-licenses/qt6webengine/a511659fdc731fb48b4b0125340918f59b7c1bf1
 /usr/share/package-licenses/qt6webengine/a5e26707e731578c081effcd0c4f9f133704d8d0
 /usr/share/package-licenses/qt6webengine/a5f010945e8822126ba2c48d3416ce095c53acb0
+/usr/share/package-licenses/qt6webengine/a676b3a7889ceb3118e504ed0de4d4306c84b911
 /usr/share/package-licenses/qt6webengine/a6a5418b4d67d9f3a33cbf184b25ac7f9fa87d33
+/usr/share/package-licenses/qt6webengine/a6cf167d379837e88c6824c4e318be9b083f6934
 /usr/share/package-licenses/qt6webengine/a7584db2e76a50884b3fe13360f2e6a354f5bedf
 /usr/share/package-licenses/qt6webengine/a782249fbecf3c0ef9d0a6f43e618ce8f6f58302
 /usr/share/package-licenses/qt6webengine/a798b9d47db3b367919d49cfb61f33e856bbd4a0
 /usr/share/package-licenses/qt6webengine/a8856071d07c0a4905d16d9667676efd198bdba2
 /usr/share/package-licenses/qt6webengine/a8ced9a6c206a0e47fac6c6d0d0ce839e85b2eb7
 /usr/share/package-licenses/qt6webengine/a9293189ddfd959ffb54ef7805b1eab21979d700
+/usr/share/package-licenses/qt6webengine/a93d47f6c51f4784c04ebd71a9ea7e477599b406
 /usr/share/package-licenses/qt6webengine/a95ab3a4b0e4bd978897f09b3b430a449da20a08
 /usr/share/package-licenses/qt6webengine/a97a2888bca904918b3b9ec008fde1d6e9905a6d
 /usr/share/package-licenses/qt6webengine/a9bf3d03b60fcdf33121b13df7d2e5ff19fa3b50
@@ -2218,6 +2430,7 @@ popd
 /usr/share/package-licenses/qt6webengine/b0dfe6043237ec253a63750c071798785709929f
 /usr/share/package-licenses/qt6webengine/b1e3723fe9cdb45e92ac20aaa6c733a3baaa2562
 /usr/share/package-licenses/qt6webengine/b274cc52fd06db856281db3593167f8765c148c9
+/usr/share/package-licenses/qt6webengine/b2caf7739cffe36848e24eb2f86ba8cd8a270e04
 /usr/share/package-licenses/qt6webengine/b2e68ce937c1f851926f7e10280cc93221d4f53c
 /usr/share/package-licenses/qt6webengine/b2fbdf97f34a32fa44a131a8cd345c809553f92b
 /usr/share/package-licenses/qt6webengine/b3598d193b623fba8216ff61f67cdb66a4f26c40
@@ -2228,6 +2441,7 @@ popd
 /usr/share/package-licenses/qt6webengine/b559c45c8d07f2679620d9771e68696ee3d5964b
 /usr/share/package-licenses/qt6webengine/b56473e6f79a3460ca3b2e387cbd36148add6679
 /usr/share/package-licenses/qt6webengine/b5f95accdf5c2ce08067a8281dac6dd35476b0a7
+/usr/share/package-licenses/qt6webengine/b60a29b41c8364d3fae9328d45f88df1e18db1ce
 /usr/share/package-licenses/qt6webengine/b6baaa7cc3f36d2c3f3e49f2072358688981d8c5
 /usr/share/package-licenses/qt6webengine/b7a11257fc8046a2f00f1a685da1f2bca2a3ba50
 /usr/share/package-licenses/qt6webengine/b877cd321c9b155e342dfdb9fcebcd71d897ba7d
@@ -2261,6 +2475,7 @@ popd
 /usr/share/package-licenses/qt6webengine/c342294a0a1aefdc3ad3bb8e8bc03092c6db0bcc
 /usr/share/package-licenses/qt6webengine/c364eb548b268fbcb4c0d5a8fb3b537fe8a5fcba
 /usr/share/package-licenses/qt6webengine/c3af063092a3cd8c31335607ba466fe91898bd4e
+/usr/share/package-licenses/qt6webengine/c4039d07eb4515f21fd3ec34bded82f5d78d6eb6
 /usr/share/package-licenses/qt6webengine/c42606afd28451c2085b5c76d4a9ee9ebfbc6bf9
 /usr/share/package-licenses/qt6webengine/c4357549991fd7090d0acb685ee15cfb2a215750
 /usr/share/package-licenses/qt6webengine/c4dbdbc12926d4d52c9156e690640f372615c234
@@ -2282,8 +2497,10 @@ popd
 /usr/share/package-licenses/qt6webengine/c962ec58bda15bee15e27678829612bff534c113
 /usr/share/package-licenses/qt6webengine/c98f7fb76b8f5e076613de9f2764c67d8161c6c2
 /usr/share/package-licenses/qt6webengine/c9c1c33aee599ebfdfb0bc2aed9ea082d9e3173a
+/usr/share/package-licenses/qt6webengine/c9f7518aa965555d8d63b27d2e05a4a8d03b7f5b
 /usr/share/package-licenses/qt6webengine/caeb68c46fa36651acf592771d09de7937926bb3
 /usr/share/package-licenses/qt6webengine/cbde92577cb69b3b45dd33f8dc600732cf9e14cb
+/usr/share/package-licenses/qt6webengine/ccbda8cac1b76f38821a2a0330e46bff78798f0a
 /usr/share/package-licenses/qt6webengine/cd3fe820606ed34ac2591caf068c7cabd3ab3509
 /usr/share/package-licenses/qt6webengine/cd821ffa80099abbc31c22fe770022f3349e0918
 /usr/share/package-licenses/qt6webengine/cdf711a72ab90a1b193aea27e96cccf491e157e2
@@ -2319,6 +2536,7 @@ popd
 /usr/share/package-licenses/qt6webengine/d9b9e4a9ac5dc9cd88457ae8c5fb777880909fe2
 /usr/share/package-licenses/qt6webengine/da5691ef713c26a2006965dd477bf44b0fcc7e97
 /usr/share/package-licenses/qt6webengine/dac7127c82749e3107b53530289e1cd548860868
+/usr/share/package-licenses/qt6webengine/dae0f982ffe71762045fc77c015c83bda38c1c9e
 /usr/share/package-licenses/qt6webengine/db16de9f0016978749716482a56ddec474b7d0b7
 /usr/share/package-licenses/qt6webengine/db85a00ab8daaf90050b20b30266c92a58cb71f2
 /usr/share/package-licenses/qt6webengine/dc1dd1fb7a63a7b007ac24a27d9dbf6b1fd3130b
@@ -2336,9 +2554,12 @@ popd
 /usr/share/package-licenses/qt6webengine/dfada97ba32cb44804736a7768104a06be91a4f7
 /usr/share/package-licenses/qt6webengine/dfb0cb7a29aadd771a9644c07fc6d8b0df156a6d
 /usr/share/package-licenses/qt6webengine/dff40ab0d80d9710a20e202b1784eac5b3a52376
+/usr/share/package-licenses/qt6webengine/e091d6ff39a03ffe3217b8839a3e0011dfa379ff
 /usr/share/package-licenses/qt6webengine/e113e21d8dfb04d0f2cb2e20f77167f661132eaa
 /usr/share/package-licenses/qt6webengine/e12321b80f1a790c54bfeb72d4adc9d03e159b41
+/usr/share/package-licenses/qt6webengine/e15c625abbd5bd8836f1ac689cf13c8731b9d9f0
 /usr/share/package-licenses/qt6webengine/e21d1daa8d25cf4e44f5d017e9adc66c5e581250
+/usr/share/package-licenses/qt6webengine/e2388f8b69fdb09561366720791e34840477b195
 /usr/share/package-licenses/qt6webengine/e2b6fcdde503187a13ad4e0d6d3eb141deb31bd4
 /usr/share/package-licenses/qt6webengine/e310076ee4f65219003bfae2427646e0236c5141
 /usr/share/package-licenses/qt6webengine/e32099d2d881a31388c8724f725e265f30b04019
@@ -2346,6 +2567,7 @@ popd
 /usr/share/package-licenses/qt6webengine/e3f989b72a7dce97f48943ac8c8b5e5ca16653f2
 /usr/share/package-licenses/qt6webengine/e452de6c5360ba269a3bda17cca33f0bf51035f5
 /usr/share/package-licenses/qt6webengine/e5501ab14484eafb1c649f01fa7455182ae66d13
+/usr/share/package-licenses/qt6webengine/e5556d805ed6e5a9445e590af4ef9f0c64c09195
 /usr/share/package-licenses/qt6webengine/e60c2e780886f95df9c9ee36992b8edabec00bcc
 /usr/share/package-licenses/qt6webengine/e621ab99159d5cc949c3a7299ba6ea69998cff8a
 /usr/share/package-licenses/qt6webengine/e66a2c506febaaf8c744908ec3e5be148ffd1d86
