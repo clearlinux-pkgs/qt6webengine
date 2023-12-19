@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.6.1
-Release  : 9
+Release  : 10
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtwebengine-everywhere-src-6.6.1.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtwebengine-everywhere-src-6.6.1.tar.xz
 Summary  : Ninja is a small build system with a focus on speed.
@@ -190,7 +190,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1702080064
+export SOURCE_DATE_EPOCH=1703015356
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -229,7 +229,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1702080064
+export SOURCE_DATE_EPOCH=1703015356
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
@@ -1747,14 +1747,14 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfdocument_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdffile_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdflink_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdflinkmodel_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfsearchmodel_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qpdfselection_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qtpdf-config_p.h
-/usr/include/QtPdf/6.6.0/QtPdf/private/qtpdfexports_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdfdocument_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdffile_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdflink_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdflinkmodel_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdfsearchmodel_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qpdfselection_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qtpdf-config_p.h
+/usr/include/QtPdf/6.6.1/QtPdf/private/qtpdfexports_p.h
 /usr/include/QtPdf/QPdfBookmarkModel
 /usr/include/QtPdf/QPdfDocument
 /usr/include/QtPdf/QPdfDocumentRenderOptions
@@ -1780,20 +1780,20 @@ popd
 /usr/include/QtPdf/qtpdfexports.h
 /usr/include/QtPdf/qtpdfglobal.h
 /usr/include/QtPdf/qtpdfversion.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfdocument_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdflinkmodel_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfpageimage_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfpagenavigator_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfsearchmodel_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qquickpdfselection_p.h
-/usr/include/QtPdfQuick/6.6.0/QtPdfQuick/private/qtpdfquickglobal_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfdocument_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdflinkmodel_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfpageimage_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfpagenavigator_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfsearchmodel_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qquickpdfselection_p.h
+/usr/include/QtPdfQuick/6.6.1/QtPdfQuick/private/qtpdfquickglobal_p.h
 /usr/include/QtPdfQuick/QtPdfQuick
 /usr/include/QtPdfQuick/QtPdfQuickDepends
 /usr/include/QtPdfQuick/QtPdfQuickVersion
 /usr/include/QtPdfQuick/qtpdfquickversion.h
-/usr/include/QtPdfWidgets/6.6.0/QtPdfWidgets/private/qpdfpageselector_p.h
-/usr/include/QtPdfWidgets/6.6.0/QtPdfWidgets/private/qpdfview_p.h
+/usr/include/QtPdfWidgets/6.6.1/QtPdfWidgets/private/qpdfpageselector_p.h
+/usr/include/QtPdfWidgets/6.6.1/QtPdfWidgets/private/qpdfview_p.h
 /usr/include/QtPdfWidgets/QPdfPageSelector
 /usr/include/QtPdfWidgets/QPdfView
 /usr/include/QtPdfWidgets/QtPdfWidgets
@@ -1859,11 +1859,11 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libQt6Pdf.so.6
-/usr/lib64/libQt6Pdf.so.6.6.0
+/usr/lib64/libQt6Pdf.so.6.6.1
 /usr/lib64/libQt6PdfQuick.so.6
-/usr/lib64/libQt6PdfQuick.so.6.6.0
+/usr/lib64/libQt6PdfQuick.so.6.6.1
 /usr/lib64/libQt6PdfWidgets.so.6
-/usr/lib64/libQt6PdfWidgets.so.6.6.0
+/usr/lib64/libQt6PdfWidgets.so.6.6.1
 /usr/lib64/qt6/plugins/imageformats/libqpdf.so
 /usr/lib64/qt6/qml/QtQuick/Pdf/libpdfquickplugin.so
 
