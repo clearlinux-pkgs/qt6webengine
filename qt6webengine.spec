@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.6.1
-Release  : 8
+Release  : 9
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtwebengine-everywhere-src-6.6.1.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.1/submodules/qtwebengine-everywhere-src-6.6.1.tar.xz
 Summary  : Ninja is a small build system with a focus on speed.
