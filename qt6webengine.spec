@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.6.2
-Release  : 13
+Release  : 14
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Summary  : CSS Minifier
@@ -198,7 +198,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1707943256
+export SOURCE_DATE_EPOCH=1707953912
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -265,7 +265,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1707943256
+export SOURCE_DATE_EPOCH=1707953912
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
