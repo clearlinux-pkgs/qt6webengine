@@ -4,4 +4,6 @@
 -DQT_FEATURE_webengine_system_icu=ON
 -DQT_FEATURE_webengine_libevent=ON
 -DQT_FEATURE_qtwebengine_widgets_build=ON
--DQT_FEATURE_qtwebengine_quick_build=ON
+-DQT_FEATURE_qtwebengine_quick_build=OFF
+-DQT_FEATURE_webengine_spellchecker=OFF
+-DFEATURE_webengine_native_spellchecker:BOOL=OFF

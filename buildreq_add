@@ -11,3 +11,4 @@ pipewire-dev
 qt6declarative-dev
 qt6tools-dev
 qt6websockets-dev
+qt6webchannel-dev
