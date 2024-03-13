@@ -1,4 +1,7 @@
 -DCMAKE_MESSAGE_LOG_LEVEL=STATUS
 -DCMAKE_TOOLCHAIN_FILE=/usr/lib64/cmake/Qt6/qt.toolchain.cmake
--DQT_FEATURE_webengine_system_ffmpeg=ON
+-DQT_FEATURE_webengine_system_ffmpeg=OFF
 -DQT_FEATURE_webengine_system_icu=ON
+-DQT_FEATURE_webengine_libevent=ON
+-DQT_FEATURE_qtwebengine_widgets_build=ON
+-DQT_FEATURE_qtwebengine_quick_build=ON
