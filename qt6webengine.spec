@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.6.2
-Release  : 17
+Release  : 18
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Summary  : CSS Minifier
@@ -168,6 +168,7 @@ Requires: qt6webengine-lib = %{version}-%{release}
 Requires: qt6webengine-data = %{version}-%{release}
 Provides: qt6webengine-devel = %{version}-%{release}
 Requires: qt6webengine = %{version}-%{release}
+Provides: qtwebengine-dev
 
 %description dev
 dev components for the qt6webengine package.
@@ -210,7 +211,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1710357791
+export SOURCE_DATE_EPOCH=1710518485
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -255,7 +256,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1710357791
+export SOURCE_DATE_EPOCH=1710518485
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
