@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.6.2
-Release  : 19
+Release  : 20
 URL      : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
 Summary  : CSS Minifier
@@ -136,6 +136,7 @@ BuildRequires : zlib-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: process6.patch
 
 %description
 CSS Minifier
@@ -204,13 +205,14 @@ license components for the qt6webengine package.
 %prep
 %setup -q -n qtwebengine-everywhere-src-6.6.2
 cd %{_builddir}/qtwebengine-everywhere-src-6.6.2
+%patch -P 1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1710603991
+export SOURCE_DATE_EPOCH=1710632254
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -236,7 +238,8 @@ export GOAMD64=v2
 -DQT_FEATURE_qtwebengine_widgets_build=ON \
 -DQT_FEATURE_qtwebengine_quick_build=OFF \
 -DQT_FEATURE_webengine_spellchecker=OFF \
--DFEATURE_webengine_native_spellchecker:BOOL=OFF
+-DFEATURE_webengine_native_spellchecker:BOOL=OFF \
+-DqtWebEngineProcessName=QtWebEngineProcess6
 make  %{?_smp_mflags}
 popd
 
@@ -255,7 +258,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1710603991
+export SOURCE_DATE_EPOCH=1710632254
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
@@ -2095,7 +2098,7 @@ popd
 
 %files libexec
 %defattr(-,root,root,-)
-/usr/libexec/QtWebEngineProcess
+/usr/libexec/QtWebEngineProcess6
 /usr/libexec/gn
 
 %files license

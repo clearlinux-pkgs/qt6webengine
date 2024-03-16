@@ -1,0 +1,27 @@
+--- qtwebengine-everywhere-src-6.6.2/src/core/api/CMakeLists.txt~	2024-02-10 00:23:21.000000000 +0000
++++ qtwebengine-everywhere-src-6.6.2/src/core/api/CMakeLists.txt	2024-03-16 23:15:54.656962030 +0000
+@@ -4,7 +4,7 @@
+ find_package(Qt6 ${PROJECT_VERSION} REQUIRED COMPONENTS Gui Network Quick)
+ find_package(Qt6 ${PROJECT_VERSION} QUIET OPTIONAL_COMPONENTS WebChannel Positioning)
+ 
+-set(qtWebEngineProcessName QtWebEngineProcess)
++set(qtWebEngineProcessName QtWebEngineProcess6)
+ 
+ qt_internal_add_module(WebEngineCore
+      SOURCES
+--- qtwebengine-everywhere-src-6.6.2/src/core/api/Qt6WebEngineCoreDeploySupport.cmake~	2024-02-10 00:23:21.000000000 +0000
++++ qtwebengine-everywhere-src-6.6.2/src/core/api/Qt6WebEngineCoreDeploySupport.cmake	2024-03-16 23:16:51.454335489 +0000
+@@ -1,3 +1,4 @@
++
+ # Copyright (C) 2023 The Qt Company Ltd.
+ # SPDX-License-Identifier: BSD-3-Clause
+ 
+@@ -57,7 +58,7 @@
+ function(_qt_internal_deploy_webenginecore_binary)
+     _qt_internal_webenginecore_status_message("Deploying the WebEngineCore process binary")
+ 
+-    set(candidates "QtWebEngineProcess")
++    set(candidates "QtWebEngineProcess6")
+     if(__QT_DEPLOY_ACTIVE_CONFIG STREQUAL "Debug" AND __QT_DEPLOY_SYSTEM_NAME STREQUAL "Windows")
+         list(PREPEND candidates "QtWebEngineProcessd")
+     endif()

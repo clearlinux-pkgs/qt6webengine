@@ -7,3 +7,4 @@
 -DQT_FEATURE_qtwebengine_quick_build=OFF
 -DQT_FEATURE_webengine_spellchecker=OFF
 -DFEATURE_webengine_native_spellchecker:BOOL=OFF
+-DqtWebEngineProcessName=QtWebEngineProcess6
