@@ -6,10 +6,10 @@
 # autospec commit: c02b2fe
 #
 Name     : qt6webengine
-Version  : 6.6.2
-Release  : 22
-URL      : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
-Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.2/submodules/qtwebengine-everywhere-src-6.6.2.tar.xz
+Version  : 6.6.3
+Release  : 23
+URL      : https://download.qt.io/official_releases/qt/6.6/6.6.3/submodules/qtwebengine-everywhere-src-6.6.3.tar.xz
+Source0  : https://download.qt.io/official_releases/qt/6.6/6.6.3/submodules/qtwebengine-everywhere-src-6.6.3.tar.xz
 Summary  : CSS Minifier
 Group    : Development/Tools
 License  : APSL-2.0 Apache-2.0 Artistic-2.0 BSD-2-Clause BSD-2-Clause-FreeBSD BSD-3-Clause BSD-3-Clause-Clear BSL-1.0 CC-BY-4.0 CC-BY-SA-3.0 CC0-1.0 ClArtistic EPL-1.0 GFDL-1.2 GFDL-1.3 GPL-2.0 GPL-3.0 HPND ICU IJG ISC LGPL-2.0 LGPL-2.1 LGPL-3.0 Libpng MIT MIT-Opengroup MPL-1.1 MPL-2.0 MPL-2.0-no-copyleft-exception NCSA OFL-1.1 Public-Domain Python-2.0 SGI-B-2.0 Unicode-DFS-2016 Unlicense Zlib bzip2-1.0.6 xpp
@@ -203,8 +203,8 @@ license components for the qt6webengine package.
 
 
 %prep
-%setup -q -n qtwebengine-everywhere-src-6.6.2
-cd %{_builddir}/qtwebengine-everywhere-src-6.6.2
+%setup -q -n qtwebengine-everywhere-src-6.6.3
+cd %{_builddir}/qtwebengine-everywhere-src-6.6.3
 %patch -P 1 -p1
 
 %build
@@ -212,7 +212,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1711174126
+export SOURCE_DATE_EPOCH=1711504746
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -258,7 +258,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1711174126
+export SOURCE_DATE_EPOCH=1711504746
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/44d95d73e9ffde5cd25aac40bce60bd553b9a478 || :
@@ -1821,14 +1821,14 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdfdocument_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdffile_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdflink_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdflinkmodel_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdfsearchmodel_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qpdfselection_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qtpdf-config_p.h
-/usr/include/QtPdf/6.6.2/QtPdf/private/qtpdfexports_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdfdocument_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdffile_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdflink_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdflinkmodel_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdfsearchmodel_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qpdfselection_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qtpdf-config_p.h
+/usr/include/QtPdf/6.6.3/QtPdf/private/qtpdfexports_p.h
 /usr/include/QtPdf/QPdfBookmarkModel
 /usr/include/QtPdf/QPdfDocument
 /usr/include/QtPdf/QPdfDocumentRenderOptions
@@ -1854,20 +1854,20 @@ popd
 /usr/include/QtPdf/qtpdfexports.h
 /usr/include/QtPdf/qtpdfglobal.h
 /usr/include/QtPdf/qtpdfversion.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfdocument_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdflinkmodel_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfpageimage_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfpagenavigator_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfsearchmodel_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qquickpdfselection_p.h
-/usr/include/QtPdfQuick/6.6.2/QtPdfQuick/private/qtpdfquickglobal_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfbookmarkmodel_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfdocument_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdflinkmodel_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfpageimage_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfpagenavigator_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfsearchmodel_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qquickpdfselection_p.h
+/usr/include/QtPdfQuick/6.6.3/QtPdfQuick/private/qtpdfquickglobal_p.h
 /usr/include/QtPdfQuick/QtPdfQuick
 /usr/include/QtPdfQuick/QtPdfQuickDepends
 /usr/include/QtPdfQuick/QtPdfQuickVersion
 /usr/include/QtPdfQuick/qtpdfquickversion.h
-/usr/include/QtPdfWidgets/6.6.2/QtPdfWidgets/private/qpdfpageselector_p.h
-/usr/include/QtPdfWidgets/6.6.2/QtPdfWidgets/private/qpdfview_p.h
+/usr/include/QtPdfWidgets/6.6.3/QtPdfWidgets/private/qpdfpageselector_p.h
+/usr/include/QtPdfWidgets/6.6.3/QtPdfWidgets/private/qpdfview_p.h
 /usr/include/QtPdfWidgets/QPdfPageSelector
 /usr/include/QtPdfWidgets/QPdfView
 /usr/include/QtPdfWidgets/QtPdfWidgets
@@ -1877,19 +1877,19 @@ popd
 /usr/include/QtPdfWidgets/qpdfview.h
 /usr/include/QtPdfWidgets/qtpdfwidgetsglobal.h
 /usr/include/QtPdfWidgets/qtpdfwidgetsversion.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qtwebenginecore-config_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qtwebenginecoreglobal_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginecontextmenurequest_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginecookiestore_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginedownloadrequest_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebengineglobalsettings_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginehistory_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginemessagepumpscheduler_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginenewwindowrequest_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginepage_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebengineprofile_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebenginescriptcollection_p.h
-/usr/include/QtWebEngineCore/6.6.2/QtWebEngineCore/private/qwebengineurlrequestinfo_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qtwebenginecore-config_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qtwebenginecoreglobal_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginecontextmenurequest_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginecookiestore_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginedownloadrequest_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebengineglobalsettings_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginehistory_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginemessagepumpscheduler_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginenewwindowrequest_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginepage_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebengineprofile_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebenginescriptcollection_p.h
+/usr/include/QtWebEngineCore/6.6.3/QtWebEngineCore/private/qwebengineurlrequestinfo_p.h
 /usr/include/QtWebEngineCore/QWebEngineCertificateError
 /usr/include/QtWebEngineCore/QWebEngineClientCertificateSelection
 /usr/include/QtWebEngineCore/QWebEngineClientCertificateStore
@@ -1954,11 +1954,11 @@ popd
 /usr/include/QtWebEngineCore/qwebengineurlrequestjob.h
 /usr/include/QtWebEngineCore/qwebengineurlscheme.h
 /usr/include/QtWebEngineCore/qwebengineurlschemehandler.h
-/usr/include/QtWebEngineWidgets/6.6.2/QtWebEngineWidgets/private/autofillpopupwidget_p.h
-/usr/include/QtWebEngineWidgets/6.6.2/QtWebEngineWidgets/private/qwebenginenotificationpresenter_p.h
-/usr/include/QtWebEngineWidgets/6.6.2/QtWebEngineWidgets/private/qwebengineview_p.h
-/usr/include/QtWebEngineWidgets/6.6.2/QtWebEngineWidgets/private/touchhandlewidget_p.h
-/usr/include/QtWebEngineWidgets/6.6.2/QtWebEngineWidgets/private/touchselectionmenuwidget_p.h
+/usr/include/QtWebEngineWidgets/6.6.3/QtWebEngineWidgets/private/autofillpopupwidget_p.h
+/usr/include/QtWebEngineWidgets/6.6.3/QtWebEngineWidgets/private/qwebenginenotificationpresenter_p.h
+/usr/include/QtWebEngineWidgets/6.6.3/QtWebEngineWidgets/private/qwebengineview_p.h
+/usr/include/QtWebEngineWidgets/6.6.3/QtWebEngineWidgets/private/touchhandlewidget_p.h
+/usr/include/QtWebEngineWidgets/6.6.3/QtWebEngineWidgets/private/touchselectionmenuwidget_p.h
 /usr/include/QtWebEngineWidgets/QWebEngineView
 /usr/include/QtWebEngineWidgets/QWebEngineViewAccessible
 /usr/include/QtWebEngineWidgets/QtWebEngineWidgets
@@ -2064,15 +2064,15 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libQt6Pdf.so.6
-/usr/lib64/libQt6Pdf.so.6.6.2
+/usr/lib64/libQt6Pdf.so.6.6.3
 /usr/lib64/libQt6PdfQuick.so.6
-/usr/lib64/libQt6PdfQuick.so.6.6.2
+/usr/lib64/libQt6PdfQuick.so.6.6.3
 /usr/lib64/libQt6PdfWidgets.so.6
-/usr/lib64/libQt6PdfWidgets.so.6.6.2
+/usr/lib64/libQt6PdfWidgets.so.6.6.3
 /usr/lib64/libQt6WebEngineCore.so.6
-/usr/lib64/libQt6WebEngineCore.so.6.6.2
+/usr/lib64/libQt6WebEngineCore.so.6.6.3
 /usr/lib64/libQt6WebEngineWidgets.so.6
-/usr/lib64/libQt6WebEngineWidgets.so.6.6.2
+/usr/lib64/libQt6WebEngineWidgets.so.6.6.3
 /usr/lib64/qt6/metatypes/qt6pdf_relwithdebinfo_metatypes.json
 /usr/lib64/qt6/metatypes/qt6pdfquick_relwithdebinfo_metatypes.json
 /usr/lib64/qt6/metatypes/qt6pdfwidgets_relwithdebinfo_metatypes.json
