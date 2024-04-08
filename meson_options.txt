@@ -1,65 +1,36 @@
-# General options
+# #############################################################################
+# Copyright (c) 2018-present     Dima Krasner <dima@dimakrasner.com>
+#                                lzutao <taolzu(at)gmail.com>
+# All rights reserved.
+#
+# This source code is licensed under both the BSD-style license (found in the
+# LICENSE file in the root directory of this source tree) and the GPLv2 (found
+# in the COPYING file in the root directory of this source tree).
+# #############################################################################
 
-option('bitdepths',
-    type: 'array',
-    choices: ['8', '16'],
-    description: 'Enable only specified bitdepths')
+# Read guidelines from https://wiki.gnome.org/Initiatives/GnomeGoals/MesonPorting
 
-option('enable_asm',
-    type: 'boolean',
-    value: true,
-    description: 'Build asm files, if available')
+option('legacy_level', type: 'integer', min: 0, max: 7, value: 5,
+  description: 'Support any legacy format: 7 to 1 for v0.7+ to v0.1+')
+option('debug_level', type: 'integer', min: 0, max: 9, value: 1,
+  description: 'Enable run-time debug. See lib/common/debug.h')
+option('backtrace', type: 'feature', value: 'disabled',
+  description: 'Display a stack backtrace when execution generates a runtime exception')
+option('static_runtime', type: 'boolean', value: false,
+  description: 'Link to static run-time libraries on MSVC')
 
-option('enable_tools',
-    type: 'boolean',
-    value: true,
-    description: 'Build dav1d cli tools')
+option('bin_programs', type: 'boolean', value: true,
+  description: 'Enable programs build')
+option('bin_tests', type: 'boolean', value: false,
+  description: 'Enable tests build')
+option('bin_contrib', type: 'boolean', value: false,
+  description: 'Enable contrib build')
 
-option('enable_examples',
-    type: 'boolean',
-    value: false,
-    description: 'Build dav1d examples')
-
-option('enable_tests',
-    type: 'boolean',
-    value: true,
-    description: 'Build dav1d tests')
-
-option('enable_docs',
-    type: 'boolean',
-    value: false,
-    description: 'Build dav1d documentation')
-
-option('logging',
-    type: 'boolean',
-    value: true,
-    description: 'Print error log messages using the provided callback function')
-
-option('testdata_tests',
-    type: 'boolean',
-    value: false,
-    description: 'Run tests requiring the test data repository')
-
-option('fuzzing_engine',
-    type: 'combo',
-    choices : ['none', 'libfuzzer', 'oss-fuzz'],
-    value: 'none',
-    description: 'Select the fuzzing engine')
-
-option('fuzzer_ldflags',
-    type: 'string',
-    description: 'Extra LDFLAGS used during linking of fuzzing binaries')
-
-option('stack_alignment',
-    type: 'integer',
-    value: 0)
-
-option('xxhash_muxer',
-    type : 'feature',
-    value : 'auto')
-
-option('trim_dsp',
-    type: 'combo',
-    choices: ['true', 'false', 'if-release'],
-    value: 'if-release',
-    description: 'Eliminate redundant DSP functions where possible')
+option('multi_thread', type: 'feature', value: 'enabled',
+  description: 'Enable multi-threading when pthread is detected')
+option('zlib', type: 'feature', value: 'auto',
+  description: 'Enable zlib support')
+option('lzma', type: 'feature', value: 'auto',
+  description: 'Enable lzma support')
+option('lz4', type: 'feature', value: 'auto',
+  description: 'Enable lz4 support')
