@@ -1,3 +1,4 @@
+libQt6Pdf.so.6:NonQt
 libQt6Pdf.so.6:Qt_6
 libQt6Pdf.so.6:Qt_6_PRIVATE_API
 libQt6Pdf.so.6:_ZN12QPdfDocument10getAllTextEi
@@ -98,11 +99,9 @@ libQt6Pdf.so.6:_ZN17QPdfPageNavigatorC2EP7QObject
 libQt6Pdf.so.6:_ZN17QPdfPageNavigatorD0Ev
 libQt6Pdf.so.6:_ZN17QPdfPageNavigatorD1Ev
 libQt6Pdf.so.6:_ZN17QPdfPageNavigatorD2Ev
-libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate10getCharBoxEP17fpdf_textpage_t__di
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate13checkCompleteEv
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate13fpdf_GetBlockEPvmPhm
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate15fpdf_AddSegmentEP17_FX_DOWNLOADHINTSmm
-libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate15getCharPositionEP17fpdf_textpage_t__di
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate15tryLoadDocumentEv
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate15updateLastErrorEv
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate16fpdf_IsDataAvailEP13_FX_FILEAVAILmm
@@ -112,7 +111,6 @@ libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate35initiateAsyncLoadWithTotalSizeKnownEy
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate38_q_tryLoadingWithSizeFromContentHeaderEv
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate4loadEP9QIODeviceb
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate5clearEv
-libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate7getTextEP17fpdf_textpage_t__ii
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate7hitTestEi7QPointF
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivate9setStatusEN12QPdfDocument6StatusE
 libQt6Pdf.so.6:_ZN19QPdfDocumentPrivateC1Ev
@@ -181,6 +179,12 @@ libQt6Pdf.so.6:_ZNK17QPdfPageNavigator11currentZoomEv
 libQt6Pdf.so.6:_ZNK17QPdfPageNavigator13backAvailableEv
 libQt6Pdf.so.6:_ZNK17QPdfPageNavigator15currentLocationEv
 libQt6Pdf.so.6:_ZNK17QPdfPageNavigator16forwardAvailableEv
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate10getCharBoxEP13fpdf_page_t__P17fpdf_textpage_t__i
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate13mapPageToViewEP13fpdf_page_t__dd
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate13mapPageToViewEP13fpdf_page_t__dddd
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate13mapViewToPageEP13fpdf_page_t__7QPointF
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate15getCharPositionEP13fpdf_page_t__P17fpdf_textpage_t__i
+libQt6Pdf.so.6:_ZNK19QPdfDocumentPrivate7getTextEP17fpdf_textpage_t__ii
 libQt6Pdf.so.6:_ZNK8QPdfFile10metaObjectEv
 libQt6Pdf.so.6:_ZNK8QPdfLink10rectanglesEv
 libQt6Pdf.so.6:_ZNK8QPdfLink12contextAfterEv
@@ -193,6 +197,7 @@ libQt6Pdf.so.6:_ZNK8QPdfLink7isValidEv
 libQt6Pdf.so.6:_ZNK8QPdfLink8locationEv
 libQt6Pdf.so.6:_ZNK8QPdfLink8toStringEv
 libQt6Pdf.so.6:_Zls6QDebugRK8QPdfLink
+libQt6PdfQuick.so.6:NonQt
 libQt6PdfQuick.so.6:Qt_6
 libQt6PdfQuick.so.6:Qt_6_PRIVATE_API
 libQt6PdfQuick.so.6:_Z30qml_register_types_QtQuick_Pdfv
@@ -330,6 +335,7 @@ libQt6PdfQuick.so.6:_ZThn16_N18QQuickPdfPageImageD0Ev
 libQt6PdfQuick.so.6:_ZThn16_N18QQuickPdfPageImageD1Ev
 libQt6PdfQuick.so.6:_ZThn16_N18QQuickPdfSelectionD0Ev
 libQt6PdfQuick.so.6:_ZThn16_N18QQuickPdfSelectionD1Ev
+libQt6PdfWidgets.so.6:NonQt
 libQt6PdfWidgets.so.6:Qt_6
 libQt6PdfWidgets.so.6:Qt_6_PRIVATE_API
 libQt6PdfWidgets.so.6:_ZN16QPdfPageSelector11qt_metacallEN11QMetaObject4CallEiPPv
@@ -391,6 +397,7 @@ libQt6PdfWidgets.so.6:_ZThn16_N16QPdfPageSelectorD0Ev
 libQt6PdfWidgets.so.6:_ZThn16_N16QPdfPageSelectorD1Ev
 libQt6PdfWidgets.so.6:_ZThn16_N8QPdfViewD0Ev
 libQt6PdfWidgets.so.6:_ZThn16_N8QPdfViewD1Ev
+libQt6WebEngineCore.so.6:NonQt
 libQt6WebEngineCore.so.6:Qt_6
 libQt6WebEngineCore.so.6:Qt_6_PRIVATE_API
 libQt6WebEngineCore.so.6:_Z17qWebEngineVersionv
@@ -1895,6 +1902,7 @@ libQt6WebEngineCore.so.6:_ZThn40_N15QtWebEngineCore34RenderWidgetHostViewQtDeleg
 libQt6WebEngineCore.so.6:_Zls6QDebugRK16QWebEngineScript
 libQt6WebEngineCore.so.6:_ZlsR11QDataStreamRK17QWebEngineHistory
 libQt6WebEngineCore.so.6:_ZrsR11QDataStreamR17QWebEngineHistory
+libQt6WebEngineWidgets.so.6:NonQt
 libQt6WebEngineWidgets.so.6:Qt_6
 libQt6WebEngineWidgets.so.6:Qt_6_PRIVATE_API
 libQt6WebEngineWidgets.so.6:_ZN14QWebEngineView10closeEventEP11QCloseEvent
