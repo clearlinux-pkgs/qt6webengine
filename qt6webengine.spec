@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.7.3
-Release  : 35
+Release  : 36
 URL      : https://download.qt.io/official_releases/qt/6.7/6.7.3/submodules/qtwebengine-everywhere-src-6.7.3.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.7/6.7.3/submodules/qtwebengine-everywhere-src-6.7.3.tar.xz
 Summary  : CSS Minifier
@@ -213,7 +213,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1727843900
+export SOURCE_DATE_EPOCH=1727911925
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -259,7 +259,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1727843900
+export SOURCE_DATE_EPOCH=1727911925
 rm -rf %{buildroot}
 ## install_prepend content
 ulimit -n 32768
@@ -2016,6 +2016,12 @@ popd
 /usr/lib64/cmake/Qt6/FindPkgConfigHost.cmake
 /usr/lib64/cmake/Qt6/FindSnappy.cmake
 /usr/lib64/cmake/Qt6BuildInternals/StandaloneTests/QtWebEngineTestsConfig.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginAdditionalTargetInfo.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginConfig.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginConfigVersion.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginConfigVersionImpl.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginTargets-relwithdebinfo.cmake
+/usr/lib64/cmake/Qt6Designer/Qt6QWebEngineViewPluginTargets.cmake
 /usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginAdditionalTargetInfo.cmake
 /usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfig.cmake
 /usr/lib64/cmake/Qt6Gui/Qt6QPdfPluginConfigVersion.cmake
@@ -2118,6 +2124,7 @@ popd
 /usr/lib64/qt6/modules/PdfWidgets.json
 /usr/lib64/qt6/modules/WebEngineCore.json
 /usr/lib64/qt6/modules/WebEngineWidgets.json
+/usr/lib64/qt6/plugins/designer/libqwebengineview.so
 /usr/lib64/qt6/plugins/imageformats/libqpdf.so
 /usr/lib64/qt6/qml/QtQuick/Pdf/+Material/PdfStyle.qml
 /usr/lib64/qt6/qml/QtQuick/Pdf/+Universal/PdfStyle.qml
