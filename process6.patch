@@ -1,5 +1,17 @@
---- qtwebengine-everywhere-src-6.6.2/src/core/api/CMakeLists.txt~	2024-02-10 00:23:21.000000000 +0000
-+++ qtwebengine-everywhere-src-6.6.2/src/core/api/CMakeLists.txt	2024-03-16 23:15:54.656962030 +0000
+From 22b1383ff7f45621d12af6d108f7f98c8d0c9706 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 26 Nov 2024 09:00:47 -0800
+Subject: [PATCH] process6
+
+---
+ src/core/api/CMakeLists.txt                      | 2 +-
+ src/core/api/Qt6WebEngineCoreDeploySupport.cmake | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/core/api/CMakeLists.txt b/src/core/api/CMakeLists.txt
+index 79e4ba88a..602a849cc 100644
+--- a/src/core/api/CMakeLists.txt
++++ b/src/core/api/CMakeLists.txt
 @@ -4,7 +4,7 @@
  find_package(Qt6 ${PROJECT_VERSION} REQUIRED COMPONENTS Gui Network Quick)
  find_package(Qt6 ${PROJECT_VERSION} QUIET OPTIONAL_COMPONENTS WebChannel Positioning)
@@ -9,14 +21,11 @@
  
  qt_internal_add_module(WebEngineCore
       SOURCES
---- qtwebengine-everywhere-src-6.6.2/src/core/api/Qt6WebEngineCoreDeploySupport.cmake~	2024-02-10 00:23:21.000000000 +0000
-+++ qtwebengine-everywhere-src-6.6.2/src/core/api/Qt6WebEngineCoreDeploySupport.cmake	2024-03-16 23:16:51.454335489 +0000
-@@ -1,3 +1,4 @@
-+
- # Copyright (C) 2023 The Qt Company Ltd.
- # SPDX-License-Identifier: BSD-3-Clause
- 
-@@ -57,7 +58,7 @@
+diff --git a/src/core/api/Qt6WebEngineCoreDeploySupport.cmake b/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
+index 02190b32d..d503a61aa 100644
+--- a/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
++++ b/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
+@@ -57,7 +57,7 @@ endfunction()
  function(_qt_internal_deploy_webenginecore_binary)
      _qt_internal_webenginecore_status_message("Deploying the WebEngineCore process binary")
  
@@ -25,3 +34,6 @@
      if(__QT_DEPLOY_ACTIVE_CONFIG STREQUAL "Debug" AND __QT_DEPLOY_SYSTEM_NAME STREQUAL "Windows")
          list(PREPEND candidates "QtWebEngineProcessd")
      endif()
+-- 
+2.47.0
+
