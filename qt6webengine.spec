@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.8.0
-Release  : 37
+Release  : 38
 URL      : https://download.qt.io/official_releases/qt/6.8/6.8.0/submodules/qtwebengine-everywhere-src-6.8.0.zip
 Source0  : https://download.qt.io/official_releases/qt/6.8/6.8.0/submodules/qtwebengine-everywhere-src-6.8.0.zip
 Summary  : CSS Minifier
@@ -244,6 +244,7 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
+export NINJAJOBS=4
 %cmake .. -DCMAKE_MESSAGE_LOG_LEVEL=STATUS \
 -DCMAKE_TOOLCHAIN_FILE=/usr/lib64/cmake/Qt6/qt.toolchain.cmake \
 -DQT_FEATURE_webengine_system_ffmpeg=OFF \
@@ -276,6 +277,7 @@ export SOURCE_DATE_EPOCH=1732655160
 rm -rf %{buildroot}
 ## install_prepend content
 ulimit -n 32768
+export NINJAJOBS=4
 ## install_prepend end
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/5435dd9db3226d0dcb42531caccb0fddd45307d0 || :
