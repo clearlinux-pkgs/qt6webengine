@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.8.0
-Release  : 40
+Release  : 41
 URL      : https://download.qt.io/official_releases/qt/6.8/6.8.0/submodules/qtwebengine-everywhere-src-6.8.0.zip
 Source0  : https://download.qt.io/official_releases/qt/6.8/6.8.0/submodules/qtwebengine-everywhere-src-6.8.0.zip
 Summary  : CSS Minifier
@@ -221,7 +221,14 @@ cd %{_builddir}/qtwebengine-everywhere-src-6.8.0
 %build
 ## build_prepend content
 ulimit -n 32768
-export UV_THREADPOOL_SIZE=64
+mkdir ../bin
+cat << EOF > ../bin/ninja
+#!/bin/bash
+set -eu
+/usr/bin/ninja -j24 $*
+EOF
+export PATH="$PWD/../bin:$PATH"
+export UV_THREADPOOL_SIZE=24
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
@@ -255,7 +262,7 @@ export GOAMD64=v2
 -DQT_FEATURE_webengine_spellchecker=OFF \
 -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
 -DqtWebEngineProcessName=QtWebEngineProcess6  -G Ninja
-ninja -j1
+ninja
 popd
 
 %install
@@ -277,7 +284,7 @@ export SOURCE_DATE_EPOCH=1732655160
 rm -rf %{buildroot}
 ## install_prepend content
 ulimit -n 32768
-export UV_THREADPOOL_SIZE=64
+export PATH="$PWD/../bin:$PATH"
 ## install_prepend end
 mkdir -p %{buildroot}/usr/share/package-licenses/qt6webengine
 cp %{_builddir}/qtwebengine-everywhere-src-%{version}/LICENSE.Chromium %{buildroot}/usr/share/package-licenses/qt6webengine/5435dd9db3226d0dcb42531caccb0fddd45307d0 || :

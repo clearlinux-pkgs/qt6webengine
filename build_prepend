@@ -1,1 +1,9 @@
 ulimit -n 32768
+mkdir ../bin
+cat << EOF > ../bin/ninja
+#!/bin/bash
+set -eu
+/usr/bin/ninja -j24 $*
+EOF
+export PATH="$PWD/../bin:$PATH"
+export UV_THREADPOOL_SIZE=24
