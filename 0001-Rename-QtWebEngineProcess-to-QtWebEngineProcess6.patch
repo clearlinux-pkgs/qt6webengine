@@ -1,0 +1,42 @@
+From cb8f8a2226c74801a8a32dc2d0e8fca817c13c6c Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Thu, 3 Apr 2025 11:51:23 -0700
+Subject: [PATCH] Rename QtWebEngineProcess to QtWebEngineProcess6
+
+Avoid conflict with the qt5 version.
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ src/core/api/CMakeLists.txt                      | 2 +-
+ src/core/api/Qt6WebEngineCoreDeploySupport.cmake | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/core/api/CMakeLists.txt b/src/core/api/CMakeLists.txt
+index dbe881ecf1..4166799413 100644
+--- a/src/core/api/CMakeLists.txt
++++ b/src/core/api/CMakeLists.txt
+@@ -4,7 +4,7 @@
+ find_package(Qt6 ${PROJECT_VERSION} REQUIRED COMPONENTS Gui Network Quick)
+ find_package(Qt6 ${PROJECT_VERSION} QUIET OPTIONAL_COMPONENTS WebChannel Positioning)
+ 
+-set(qtWebEngineProcessName QtWebEngineProcess)
++set(qtWebEngineProcessName QtWebEngineProcess6)
+ 
+ qt_internal_add_module(WebEngineCore
+      SOURCES
+diff --git a/src/core/api/Qt6WebEngineCoreDeploySupport.cmake b/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
+index e67eb212b3..9bb77ae3bd 100644
+--- a/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
++++ b/src/core/api/Qt6WebEngineCoreDeploySupport.cmake
+@@ -57,7 +57,7 @@ endfunction()
+ function(_qt_internal_deploy_webenginecore_binary)
+     _qt_internal_webenginecore_status_message("Deploying the WebEngineCore process binary")
+ 
+-    set(candidates "QtWebEngineProcess")
++    set(candidates "QtWebEngineProcess6")
+     if(__QT_DEPLOY_ACTIVE_CONFIG STREQUAL "Debug" AND __QT_DEPLOY_SYSTEM_NAME STREQUAL "Windows")
+         list(PREPEND candidates "QtWebEngineProcessd")
+     endif()
+-- 
+2.49.0
+
