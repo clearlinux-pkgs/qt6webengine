@@ -7,7 +7,7 @@
 #
 Name     : qt6webengine
 Version  : 6.9.0
-Release  : 45
+Release  : 46
 URL      : https://download.qt.io/official_releases/qt/6.9/6.9.0/submodules/qtwebengine-everywhere-src-6.9.0.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/6.9/6.9.0/submodules/qtwebengine-everywhere-src-6.9.0.tar.xz
 Summary  : CSS Minifier
